@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div class="col-md-4">
+    <ul class="nav nav-pills nav-stacked">
+        <li role="presentation" class="active">@Html.ActionLink("Add campaign", "Create", "Campaign")</li>
+        <li role="presentation">@Html.ActionLink("Add candidate", "Create", "Candidate")</li>
+        <li role="presentation">@Html.ActionLink("Add student", "Create", "Student")</li>
+    </ul>
+</div>
+<div class="col-md-4">
+
+    <a href="" class="thumbnail">
+        <img src="~/Content/Images/active_campaigns.png" alt="Active campaigns">
+    </a>
+
+</div>

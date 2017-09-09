@@ -1,0 +1,53 @@
+﻿@model UVote.Models.CampaignModel
+@{
+    ViewBag.Title = "Add campaign";
+}
+
+<h2>Add campaign</h2>
+@using (Html.BeginForm("Create", "Campaign", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.RoleTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.RoleTitle)
+                @Html.ValidationMessageFor(model => model.RoleTitle, "", htmlAttributes: new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.RoleDetails, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.RoleDetails)
+                @Html.ValidationMessageFor(model => model.RoleDetails, "", htmlAttributes: new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.OfficeTerm, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.OfficeTerm, new { @placeholder = "YYYY-MM-DD"})
+                @Html.ValidationMessageFor(model => model.OfficeTerm, "", htmlAttributes: new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CampaignStart, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.CampaignStart, new { @placeholder = "YYYY-MM-DD" })
+                @Html.ValidationMessageFor(model => model.CampaignStart, "", htmlAttributes: new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CampaignEnd, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.CampaignEnd, new { @placeholder = "YYYY-MM-DD" })
+                @Html.ValidationMessageFor(model => model.CampaignEnd, "", htmlAttributes: new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.HiddenFor(model => model.EmployeeId, new { Value = Session["employeeId"] })
+        </div>
+        <div class="form-group">
+            <input type="submit" name="submit" value="Generate campaign" />
+            <input type="reset" name="reset" value="Reset" />
+        </div>
+    </div>
+}
