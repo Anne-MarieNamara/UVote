@@ -134,6 +134,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\active_campaigns.png" />
+    <Content Include="Content\Images\boston.jpg" />
+    <Content Include="Content\Images\me.jpg" />
     <Content Include="Content\Styles.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -167,10 +169,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminModel.cs" />
+    <Compile Include="Models\Campaign.cs" />
+    <Compile Include="Models\CampaignDropDown.cs" />
     <Compile Include="Models\CampaignModel.cs" />
     <Compile Include="Models\CandidateModel.cs" />
     <Compile Include="Models\DAO.cs" />
+    <Compile Include="Models\Election.cs" />
     <Compile Include="Models\StudentModel.cs" />
+    <Compile Include="Models\VoterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +224,10 @@
     <Content Include="Views\Admin\Success.cshtml" />
     <Content Include="Views\Campaign\Success.cshtml" />
     <Content Include="Views\Campaign\Error.cshtml" />
+    <Content Include="Views\Candidate\Success.cshtml" />
+    <Content Include="Views\Candidate\Error.cshtml" />
+    <Content Include="Views\Vote\Login.cshtml" />
+    <Content Include="Views\Vote\Error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using UVote.Models;
 
 namespace UVote.Controllers
 {
     public class CandidateController : Controller
     {
+        DAO dao = new DAO();
+
         // GET: Candidate
         public ActionResult Index()
         {
+            
             return View();
         }
 
@@ -23,24 +28,37 @@ namespace UVote.Controllers
         // GET: Candidate/Create
         public ActionResult Create()
         {
+            ViewBag.CampaignChoice = new SelectList(dao.GetCampaignDropDown(), "CampaignId", "RoleTitle");
             return View();
         }
 
         // POST: Candidate/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(CandidateModel candidateModel)
         {
-            try
+            ViewBag.CampaignChoice = new SelectList(dao.GetCampaignDropDown(), "CampaignId", "RoleTitle");
+            
+            int count = 0;
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                string fileName = Path.GetFileName(candidateModel.ImageFile.FileName);
+                string uploadedPath = Path.Combine(Server.MapPath("~/Content/Images/"), fileName);
+                candidateModel.ImageFile.SaveAs(uploadedPath);
+                count = dao.InsertCandidate(candidateModel);
+                if (count == 1)
+                {
+                    ViewBag.Message = "Candidate added!";
+                    return View("Success");
+                }
+                else
+                {
+                    ViewBag.Message = $"Error {dao.message}";
+                    return View("Error");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View(candidateModel);
         }
+
 
         // GET: Candidate/Edit/5
         public ActionResult Edit(int id)

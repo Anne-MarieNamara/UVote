@@ -164,6 +164,76 @@ namespace UVote.Models
 
             return count;
         }
+
+        // Get all campaigns
+        public List<Campaign> GetCampaigns()
+        {
+            List<Campaign> campaigns = new List<Campaign>();
+            SqlDataReader reader;
+            SqlCommand cmd;
+            Connection();
+            cmd = new SqlCommand("uspGetCampaigns", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                connection.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Campaign campaign = new Campaign();
+                    campaign.CampaignId = reader[0].ToString();
+                    campaign.RoleTitle = reader[1].ToString();
+                    campaign.RoleDetails = reader[2].ToString();
+                    campaign.OfficeTerm = reader[3].ToString();
+                    campaign.CampaignStart = reader[4].ToString();
+                    campaign.CampaignEnd = reader[5].ToString();
+                    campaign.EmployeeId = reader[6].ToString();
+                    campaigns.Add(campaign);
+                }
+            }
+            catch (SqlException ex)
+            {
+                message = ex.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return campaigns;
+        }
+
+        public List<Campaign> GetCampaignDropDown()
+        {
+            List<Campaign> campaigns = new List<Campaign>();
+            SqlDataReader reader;
+            SqlCommand cmd;
+            Connection();
+            cmd = new SqlCommand("uspGetCampaignDropDown", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            
+            try
+            {
+                connection.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Campaign campaign = new Campaign();
+                    campaign.CampaignId = reader[0].ToString();
+                    campaign.RoleTitle = reader[1].ToString();
+                    campaigns.Add(campaign);
+                }
+            }
+            catch (SqlException ex)
+            {
+                message = ex.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return campaigns;
+        }
         #endregion
 
         #region Candidate
@@ -197,6 +267,81 @@ namespace UVote.Models
                 connection.Close();
             }
             return count;
+        }
+        #endregion
+
+        #region Voter
+        // Login an voter
+        public string VoterLogin(VoterModel voterModel)
+        {
+            string studentNumber = null;
+            string password;
+            SqlCommand cmd;
+            SqlDataReader reader;
+            Connection();
+            cmd = new SqlCommand("uspVoterLogin", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@studentNumber", voterModel.StudentNumber);
+
+            try
+            {
+                connection.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    password = reader["Password"].ToString();
+                    if (Crypto.VerifyHashedPassword(password, voterModel.Password))
+                    {
+                        studentNumber = reader["StudentNumber"].ToString();
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                message = ex.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return studentNumber;
+        }
+
+        // Get all campaigns
+        public List<Election> GetElections()
+        {
+            List<Election> elections = new List<Election>();
+            SqlDataReader reader;
+            SqlCommand cmd;
+            Connection();
+            cmd = new SqlCommand("uspGetElections", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                connection.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Election election = new Election();
+                    election.CampaignId = reader[0].ToString();
+                    election.RoleTitle = reader[1].ToString();
+                    election.RoleDetails = reader[2].ToString();
+                    election.OfficeTerm = reader[3].ToString();
+                    election.CampaignStart = reader[4].ToString();
+                    election.CampaignEnd = reader[5].ToString();
+                    elections.Add(election);
+                }
+            }
+            catch (SqlException ex)
+            {
+                message = ex.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return elections;
         }
         #endregion
     }

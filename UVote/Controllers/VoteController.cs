@@ -3,15 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using UVote.Models;
 
 namespace UVote.Controllers
 {
     public class VoteController : Controller
     {
+        DAO dao = new DAO();
         // GET: Vote
         public ActionResult Index()
         {
+            List<Election> list = dao.GetElections();
+            return View(list);
+        }
+
+        // GET: Login
+        [HttpGet]
+        public ActionResult Login()
+        {
             return View();
+        }
+
+        // POST: Login
+        [HttpPost]
+        public ActionResult Login(VoterModel voter)
+        {
+            if (ModelState.IsValid)
+            {
+                voter.StudentNumber = dao.VoterLogin(voter);
+                if (voter.StudentNumber != null)
+                {
+                    Session["studentNumber"] = voter.StudentNumber;
+                    //Session["name"] = admin.Name;
+                    //ViewBag.Session = Session["employeeId"] + "" + Session["name"];
+                    ViewBag.Session = Session["studentNumber"];
+                    return View("Index");
+                }
+                else
+                {
+                    ViewBag.Message = $"Error {dao.message}!";
+                    return View("Error");
+                }
+            }
+            else return View(voter);
         }
 
         // GET: Vote/Details/5

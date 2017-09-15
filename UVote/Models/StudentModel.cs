@@ -14,12 +14,12 @@ namespace UVote.Models
         public string StudentNumber { get; set; }
 
         [Display(Name = "First Name")]
-        [RegularExpression("[A-Za-z]+")]
+        [RegularExpression(@"^[A-Za-z]+$")]
         [Required]
         public string FirstName { get; set; }
 
         [Display(Name = "Last Name")]
-        [RegularExpression("[A-Za-z]+")]
+        [RegularExpression(@"^[A-Za-z]+$")]
         [Required]
         public string LastName { get; set; }
 

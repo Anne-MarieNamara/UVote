@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using UVote.Models;
+using System.Net;
 
 namespace UVote.Controllers
 {
@@ -14,12 +15,24 @@ namespace UVote.Controllers
         // GET: Campaign
         public ActionResult Index()
         {
-            return View();
+            List<Campaign> list = dao.GetCampaigns();
+            
+            return View(list);
         }
 
         // GET: Campaign/Details/5
         public ActionResult Details(int id)
         {
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //List<Campaign> campaigns = dao.GetCampaignDetails(id);
+            //if (campaigns == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //return View(campaigns);
             return View();
         }
 
