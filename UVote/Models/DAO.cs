@@ -343,6 +343,45 @@ namespace UVote.Models
             }
             return elections;
         }
+
+        // Get all campaigns
+        public List<ElectoralCandidate> GetElectionCandidates(int id)
+        {
+            List<ElectoralCandidate> list = new List<ElectoralCandidate>();
+            SqlDataReader reader;
+            SqlCommand cmd;
+            Connection();
+            cmd = new SqlCommand("uspGetElectionCandidate", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@campaignId", id);
+
+            try
+            {
+                connection.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    ElectoralCandidate candidate = new ElectoralCandidate();
+                    candidate.CandidateId = reader[0].ToString();
+                    candidate.FirstName = reader[1].ToString();
+                    candidate.LastName = reader[2].ToString();
+                    candidate.Manifesto = reader[3].ToString();
+                    candidate.ImageUrl = reader[4].ToString();
+                    candidate.PreviousHistory = reader[5].ToString();
+                    candidate.CampaignId = reader[6].ToString();
+                    list.Add(candidate);
+                }
+            }
+            catch (SqlException ex)
+            {
+                message = ex.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return list;
+        }
         #endregion
     }
 }

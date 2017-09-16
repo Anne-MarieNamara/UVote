@@ -18,7 +18,7 @@
         foreach (var item in Model)
         {
             <div class="panel panel-info">
-                <div class="panel-heading">@Html.ActionLink(@item.RoleTitle, "Details/" + @item.CampaignId, "Campaign")</div>
+                <div class="panel-heading">@Html.ActionLink(@item.RoleTitle, "Candidates/" + @item.CampaignId, "Vote")</div>
                 <div class="panel-body">
                     <h6>Role details: @item.RoleDetails</h6>
                     <h6>Term: @item.OfficeTerm</h6>

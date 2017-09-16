@@ -175,6 +175,7 @@
     <Compile Include="Models\CandidateModel.cs" />
     <Compile Include="Models\DAO.cs" />
     <Compile Include="Models\Election.cs" />
+    <Compile Include="Models\ElectoralCandidate.cs" />
     <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Models\VoterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -228,6 +229,7 @@
     <Content Include="Views\Candidate\Error.cshtml" />
     <Content Include="Views\Vote\Login.cshtml" />
     <Content Include="Views\Vote\Error.cshtml" />
+    <Content Include="Views\Vote\Candidates.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

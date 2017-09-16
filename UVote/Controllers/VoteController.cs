@@ -49,9 +49,10 @@ namespace UVote.Controllers
         }
 
         // GET: Vote/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Candidates(int id)
         {
-            return View();
+            List<ElectoralCandidate> list = dao.GetElectionCandidates(id);
+            return View("Candidates", list);
         }
 
         // GET: Vote/Create
