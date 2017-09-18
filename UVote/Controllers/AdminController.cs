@@ -51,12 +51,6 @@ namespace UVote.Controllers
             else return View(admin);
         }
 
-        // Logout
-        public ActionResult Logout()
-        {
-            return View();
-        }
-
         // Create admin
         [HttpGet]
         public ActionResult Create()
@@ -83,6 +77,14 @@ namespace UVote.Controllers
                 }   
             }
             return View(adminModel);
+        }
+
+        // Logout
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            Session.Abandon();
+            return View("../Home/Index");
         }
     }
 }

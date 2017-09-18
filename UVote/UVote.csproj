@@ -136,6 +136,7 @@
     <Content Include="Content\Images\active_campaigns.png" />
     <Content Include="Content\Images\boston.jpg" />
     <Content Include="Content\Images\me.jpg" />
+    <Content Include="Content\Images\shape-hero-background-v4.jpg" />
     <Content Include="Content\Styles.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

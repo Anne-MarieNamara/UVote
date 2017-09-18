@@ -1,22 +1,54 @@
 ﻿@using UVote.Models
-@model IEnumerable<ElectoralCandidate>
+    @model IEnumerable<ElectoralCandidate>
 @{
     ViewBag.Title = "Details";
 }
-
-<h2>Details</h2>
-@foreach (var candidate in Model)
-{
-    <div class="media">
-        <div class="media-left media-top">
-            <a href="#">
-                <img class="media-object" src="~/Content/Images/@candidate.ImageUrl" alt="@candidate.FirstName + '' + @candidate.LastName">
-            </a>
-        </div>
-        <div class="media-body">
-            <h4 class="media-heading">@candidate.FirstName + " " + @candidate.LastName</h4>
-            ...
-        </div>
-    </div>
+@section Logged{
+    @if (Session["studentNumber"] == null)
+    {
+        Response.Redirect(Url.Action("Login", "Vote"));
+    }
 }
-  
+<h2>Candidates</h2>
+<hr />
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+
+
+        @if (Model == null)
+        {
+            <div class="text-danger">
+                Error! Campaign does not contain candidates.
+            </div>
+        }
+        else
+        {
+            foreach (var candidate in Model)
+            {
+                using (Html.BeginForm())
+                {
+                    <div class="media">
+                        <div class="media-left media-top">
+                            <a href="#">
+                                <img class="media-object" src="~/Content/Images/@candidate.ImageUrl" alt="@candidate.FirstName @candidate.LastName" width="100">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading text-primary">@candidate.FirstName @candidate.LastName (Candidate ID: @candidate.CandidateId)</h4>
+                            <p class="text-success">Manifesto</p>@candidate.CampaignId
+                            <p>@candidate.Manifesto</p>
+                            <p class="text-success">Previous history</p>
+                            <p>@candidate.PreviousHistory</p>
+                            @Html.Hidden("CandidateId", @candidate.CandidateId)
+                            @Html.Hidden("CampaignId")
+                            <input type="submit" name="submit" class="btn btn-success" value="Cast vote" /> |
+                            @Html.ActionLink("Go back", "Index", "Vote")
+                        </div>
+                    </div>
+                    <hr />
+                }
+            }
+        }
+    </div>
+</div>
+

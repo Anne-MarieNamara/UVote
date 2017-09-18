@@ -34,10 +34,8 @@ namespace UVote.Controllers
                 if (voter.StudentNumber != null)
                 {
                     Session["studentNumber"] = voter.StudentNumber;
-                    //Session["name"] = admin.Name;
-                    //ViewBag.Session = Session["employeeId"] + "" + Session["name"];
                     ViewBag.Session = Session["studentNumber"];
-                    return View("Index");
+                    return RedirectToAction("Index");
                 }
                 else
                 {
@@ -48,77 +46,25 @@ namespace UVote.Controllers
             else return View(voter);
         }
 
-        // GET: Vote/Details/5
-        public ActionResult Candidates(int id)
+        [HttpPost]
+        public ActionResult Index(FormCollection form)
         {
-            List<ElectoralCandidate> list = dao.GetElectionCandidates(id);
-            return View("Candidates", list);
+            int campaignId = int.Parse(form["CampaignId"]);
+            List<ElectoralCandidate> electoralCandidates = dao.GetElectionCandidates(campaignId);
+            ViewBag.CampaignId = campaignId;
+            return View("Details", electoralCandidates);
         }
 
-        // GET: Vote/Create
-        public ActionResult Create()
+        public ActionResult Details()
         {
             return View();
         }
 
-        // POST: Vote/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Logout()
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            Session.Clear();
+            Session.Abandon();
+            return View("../Home/Index");
         }
-
-        // GET: Vote/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Vote/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Vote/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Vote/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-    }
+    }      
 }

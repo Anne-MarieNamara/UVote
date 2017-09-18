@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Styles.css" rel="stylesheet" />
 </head>
 <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -39,14 +40,17 @@
     <div class="container">
         @RenderSection("Logged", false)
         @RenderBody()
-        <footer>
+        
+    </div>
+    <footer class="footer">
+        <div class="container">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Sitemap", "Sitemap", "Home")</li>
                 <li><a href="#">uVote</a></li>
-                <li><a href="#">Copyright &copy; 2017</a></li>
-            </ul> 
-        </footer>
-    </div>
+                <li><a href="#">&copy; @DateTime.Now.Year</a></li>
+            </ul>
+        </div>
+    </footer>
     <script src="~/Scripts/jquery-3.1.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
 </body>

@@ -3,7 +3,12 @@
 @{
     ViewBag.Title = "Index";
 }
-
+@section Logged{
+    @if (Session["employeeId"] == null)
+    {
+        Response.Redirect(Url.Action("Login", "admin"));
+    }
+}
 <h2>Campaigns</h2>
 <div class="col-md-4 col-md-offset-4">
     @if (Model == null)

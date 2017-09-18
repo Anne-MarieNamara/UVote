@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace UVote.Models
 {
@@ -25,22 +26,17 @@ namespace UVote.Models
 
         [Required]
         public string Manifesto { get; set; }
-
-        
-        [Display(Name = "Avatar")]
+       
         public string ImageUrl { get; set; }
-
-        public HttpPostedFileBase ImageFile { get; set; }
 
         [Display(Name = "Previous history")]
         [Required]
         public string PreviousHistory { get; set; }
 
-        [Display(Name = "Campaign")]
-        [Required]
         public string CampaignId { get; set; }
+        public IEnumerable<SelectListItem> CampaignIds { get; set; }
 
-        [Required]
+ 
         public string EmployeeId { get; set; }
     }
 }

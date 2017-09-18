@@ -268,6 +268,33 @@ namespace UVote.Models
             }
             return count;
         }
+
+        // Get all campaign ids
+        public IEnumerable<int> GetAllCampaignID()
+        {
+            List<int> ids = new List<int>();
+            SqlDataReader reader;
+            SqlCommand cmd;
+            int campaignId;
+            Connection();
+            cmd = new SqlCommand("uspGetAllCampaignID", connection);
+
+            try
+            {
+                connection.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    campaignId = Convert.ToInt32(reader[0]);
+                    ids.Add(campaignId);
+                }
+            }
+            catch (SqlException ex)
+            {
+                message = ex.Message;
+            }
+            return ids;
+        }
         #endregion
 
         #region Voter
@@ -307,7 +334,7 @@ namespace UVote.Models
             return studentNumber;
         }
 
-        // Get all campaigns
+        // Get all pending elections
         public List<Election> GetElections()
         {
             List<Election> elections = new List<Election>();
@@ -326,10 +353,6 @@ namespace UVote.Models
                     Election election = new Election();
                     election.CampaignId = reader[0].ToString();
                     election.RoleTitle = reader[1].ToString();
-                    election.RoleDetails = reader[2].ToString();
-                    election.OfficeTerm = reader[3].ToString();
-                    election.CampaignStart = reader[4].ToString();
-                    election.CampaignEnd = reader[5].ToString();
                     elections.Add(election);
                 }
             }
@@ -344,16 +367,18 @@ namespace UVote.Models
             return elections;
         }
 
+
+
         // Get all campaigns
-        public List<ElectoralCandidate> GetElectionCandidates(int id)
+        public List<ElectoralCandidate> GetElectionCandidates(int campaignId)
         {
             List<ElectoralCandidate> list = new List<ElectoralCandidate>();
             SqlDataReader reader;
             SqlCommand cmd;
             Connection();
-            cmd = new SqlCommand("uspGetElectionCandidate", connection);
+            cmd = new SqlCommand("uspGetElectionCandidates", connection);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@campaignId", id);
+            cmd.Parameters.AddWithValue("@campaignId", campaignId);
 
             try
             {
@@ -368,7 +393,7 @@ namespace UVote.Models
                     candidate.Manifesto = reader[3].ToString();
                     candidate.ImageUrl = reader[4].ToString();
                     candidate.PreviousHistory = reader[5].ToString();
-                    candidate.CampaignId = reader[6].ToString();
+                    //candidate.CampaignId = reader[6].ToString();
                     list.Add(candidate);
                 }
             }
@@ -382,6 +407,8 @@ namespace UVote.Models
             }
             return list;
         }
+
+        
         #endregion
     }
 }
