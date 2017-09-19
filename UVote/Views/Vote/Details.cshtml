@@ -13,8 +13,6 @@
 <hr />
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-
-
         @if (Model == null)
         {
             <div class="text-danger">
@@ -25,7 +23,7 @@
         {
             foreach (var candidate in Model)
             {
-                using (Html.BeginForm())
+                using (Html.BeginForm("Create", "Vote", FormMethod.Post))
                 {
                     <div class="media">
                         <div class="media-left media-top">
@@ -40,6 +38,7 @@
                             <p class="text-success">Previous history</p>
                             <p>@candidate.PreviousHistory</p>
                             @Html.Hidden("CandidateId", @candidate.CandidateId)
+                            @Html.Hidden("StudentNumber", Session["studentNumber"])
                             @Html.Hidden("CampaignId")
                             <input type="submit" name="submit" class="btn btn-success" value="Cast vote" /> |
                             @Html.ActionLink("Go back", "Index", "Vote")

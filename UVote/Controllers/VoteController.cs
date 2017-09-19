@@ -14,8 +14,12 @@ namespace UVote.Controllers
         public ActionResult Index()
         {
             List<Election> list = dao.GetElections();
+            
+
             return View(list);
         }
+
+        
 
         // GET: Login
         [HttpGet]
@@ -58,6 +62,27 @@ namespace UVote.Controllers
         public ActionResult Details()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(Vote vote)
+        {
+            int count = 0;
+            if (ModelState.IsValid)
+            {
+                count = dao.InsertVote(vote);
+                if (count == 1)
+                {
+                    ViewBag.Message = "Your vote has been added";
+                    return View("VoteSuccess");
+                }
+                else
+                {
+                    ViewBag.Message = "Your vote was not added.";
+                    return View("VoteError");
+                }
+            }
+            else return View(vote);
         }
 
         public ActionResult Logout()

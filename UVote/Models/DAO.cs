@@ -334,6 +334,39 @@ namespace UVote.Models
             return studentNumber;
         }
 
+        // Check to see if user has voted.
+        // If count isn't 1 then invoke GetElections()
+        public int CheckIfUserVoted(string studentNumber, int campaignId)
+        {
+            int count = 0;
+            SqlDataReader reader;
+            SqlCommand cmd;
+            Connection();
+            cmd = new SqlCommand("uspDidUserVote", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@studentNumber", studentNumber);
+            cmd.Parameters.AddWithValue("@campaignId", campaignId);
+            try
+            {
+                connection.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    count = 1;
+                }
+            }
+            catch (SqlException ex)
+            {
+                message = ex.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return count;
+        }
+
         // Get all pending elections
         public List<Election> GetElections()
         {
@@ -366,8 +399,6 @@ namespace UVote.Models
             }
             return elections;
         }
-
-
 
         // Get all campaigns
         public List<ElectoralCandidate> GetElectionCandidates(int campaignId)
@@ -408,6 +439,39 @@ namespace UVote.Models
             return list;
         }
 
+        // Insert a vote
+        public int InsertVote(Vote vote)
+        {
+            int count = 0;
+            SqlCommand cmd;
+            Connection();
+            cmd = new SqlCommand("uspInsertVote", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            vote.VoteDate = DateTime.Now;
+            cmd.Parameters.AddWithValue("@date", vote.VoteDate);
+            cmd.Parameters.AddWithValue("@candidateId", vote.CandidateId);
+            cmd.Parameters.AddWithValue("@studentNumber", vote.StudentNumber);
+            cmd.Parameters.AddWithValue("@campaignId", vote.CampaignId);
+
+            try
+            {
+                connection.Open();
+                count = cmd.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                message = ex.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return count;
+        }
+        #endregion
+
+        #region Results
+        // Display results of all elections
         
         #endregion
     }

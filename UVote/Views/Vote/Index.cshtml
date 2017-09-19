@@ -9,6 +9,7 @@
         Response.Redirect(Url.Action("Login", "Vote"));
     }
 }
+
 <h2>Pending campaigns</h2>
 <hr />
 <div class="row">
@@ -33,6 +34,7 @@
                         @Html.Hidden("CampaignId", @item.CampaignId)
                     </div>
                     <hr />
+                    
                 }
             }
         }
