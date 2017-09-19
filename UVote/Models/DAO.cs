@@ -472,7 +472,39 @@ namespace UVote.Models
 
         #region Results
         // Display results of all elections
-        
+        public List<Result> GetResults()
+        {
+            List<Result> results = new List<Result>();
+            SqlCommand cmd;
+            SqlDataReader reader;
+            Connection();
+            cmd = new SqlCommand("uspGetElectionResults", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                connection.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Result result = new Result();
+                    result.FirstName = reader["FirstName"].ToString();
+                    result.LastName = reader["LastName"].ToString();
+                    result.ImageUrl = reader["ImageUrl"].ToString();
+                    result.Votes = Convert.ToInt32(reader["Total"]);
+                    results.Add(result);
+                }
+            }
+            catch (SqlException ex)
+            {
+                message = ex.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return results;
+        }
         #endregion
     }
 }

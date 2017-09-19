@@ -1,0 +1,23 @@
+﻿@using UVote.Models
+@model IEnumerable<Result>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Results</h2>
+<hr />
+<div class="row">
+    @foreach (var result in Model)
+    {
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="~/Content/Images/@result.ImageUrl" alt="@result.FirstName @result.LastName">
+                <div class="caption">
+                    <h3>@result.FirstName @result.LastName</h3>
+                    Votes <span class="badge">@result.Votes</span></div>
+            </div>
+        </div>
+        
+    }
+    
+</div>
