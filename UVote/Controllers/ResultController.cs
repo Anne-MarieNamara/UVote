@@ -13,8 +13,20 @@ namespace UVote.Controllers
         // GET: Result
         public ActionResult Index()
         {
-            List<Result> list = dao.GetResults();
+            //List<Result> list = dao.GetResults();
+            List<RunningAndEndedElection> list = dao.GetAllRunningAndEndedElections();
             return View(list);
+        }
+
+        [HttpPost]
+        public ActionResult Index(FormCollection form)
+        {
+            return View();
+        }
+
+        public ActionResult Details()
+        {
+            return View();
         }
     }
 }

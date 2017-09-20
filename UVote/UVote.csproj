@@ -178,6 +178,7 @@
     <Compile Include="Models\Election.cs" />
     <Compile Include="Models\ElectoralCandidate.cs" />
     <Compile Include="Models\Result.cs" />
+    <Compile Include="Models\RunningAndEndedElection.cs" />
     <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Models\Vote.cs" />
     <Compile Include="Models\VoterModel.cs" />

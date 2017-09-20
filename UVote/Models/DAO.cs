@@ -471,6 +471,39 @@ namespace UVote.Models
         #endregion
 
         #region Results
+        // Display all running and ended campaigns
+        public List<RunningAndEndedElection> GetAllRunningAndEndedElections()
+        {
+            List<RunningAndEndedElection> elections = new List<RunningAndEndedElection>();
+            SqlCommand cmd;
+            SqlDataReader reader;
+            Connection();
+            cmd = new SqlCommand("uspGetAllRunningAndEndedCampaigns", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                connection.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    RunningAndEndedElection election = new RunningAndEndedElection();
+                    election.CampaignId = Convert.ToInt32(reader[0].ToString());
+                    election.RoleTitle = reader[1].ToString();
+                    elections.Add(election);
+                }
+            }
+            catch (SqlException ex)
+            {
+                message = ex.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return elections;
+        }
+
         // Display results of all elections
         public List<Result> GetResults()
         {
