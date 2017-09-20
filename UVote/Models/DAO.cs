@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.Helpers;
 using System.Web.Configuration;
-using System.IO;
 
 namespace UVote.Models
 {
@@ -335,7 +332,6 @@ namespace UVote.Models
         }
 
         // Check to see if user has voted.
-        // If count isn't 1 then invoke GetElections()
         public int CheckIfUserVoted(string studentNumber, int campaignId)
         {
             int count = 0;
@@ -424,7 +420,6 @@ namespace UVote.Models
                     candidate.Manifesto = reader[3].ToString();
                     candidate.ImageUrl = reader[4].ToString();
                     candidate.PreviousHistory = reader[5].ToString();
-                    //candidate.CampaignId = reader[6].ToString();
                     list.Add(candidate);
                 }
             }
@@ -505,7 +500,7 @@ namespace UVote.Models
         }
 
         // Display results of all elections
-        public List<Result> GetResults()
+        public List<Result> GetResults(int campaignId)
         {
             List<Result> results = new List<Result>();
             SqlCommand cmd;
@@ -513,6 +508,7 @@ namespace UVote.Models
             Connection();
             cmd = new SqlCommand("uspGetElectionResults", connection);
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@campaignId", campaignId);
 
             try
             {
@@ -524,6 +520,7 @@ namespace UVote.Models
                     result.FirstName = reader["FirstName"].ToString();
                     result.LastName = reader["LastName"].ToString();
                     result.ImageUrl = reader["ImageUrl"].ToString();
+                    result.Manifesto = reader["Manifesto"].ToString();
                     result.Votes = Convert.ToInt32(reader["Total"]);
                     results.Add(result);
                 }
@@ -537,6 +534,68 @@ namespace UVote.Models
                 connection.Close();
             }
             return results;
+        }
+
+        // Get the role title to populate the <h2> tag on /Result/Index
+        public string GetRoleTitle(int campaignId)
+        {
+            string title = null;
+            SqlCommand cmd;
+            SqlDataReader reader;
+            Connection();
+            cmd = new SqlCommand("uspGetCampaignRoleTitle", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@campaignId", campaignId);
+
+            try
+            {
+                connection.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    title = reader["RoleTitle"].ToString();
+                }
+            }
+            catch (SqlException ex)
+            {
+                message = ex.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return title;
+        }
+
+        // Get the office term to populate the <h4> tag on /Result/Index
+        public string GetOfficeTerm(int campaignId)
+        {
+            string officeTerm = null;
+            SqlCommand cmd;
+            SqlDataReader reader;
+            Connection();
+            cmd = new SqlCommand("uspGetCampaignOfficeTerm", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@campaignId", campaignId);
+
+            try
+            {
+                connection.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    officeTerm = reader["OfficeTerm"].ToString();
+                }
+            }
+            catch (SqlException ex)
+            {
+                message = ex.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return officeTerm;
         }
         #endregion
     }

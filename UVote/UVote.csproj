@@ -201,12 +201,8 @@
     <Content Include="Views\Home\Sitemap.cshtml" />
     <Content Include="Views\Shared\_LoginRegister.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
-    <Content Include="Views\Student\Details.cshtml" />
     <Content Include="Views\Student\Create.cshtml" />
-    <Content Include="Views\Student\Edit.cshtml" />
-    <Content Include="Views\Student\Delete.cshtml" />
     <Content Include="Views\Campaign\Index.cshtml" />
-    <Content Include="Views\Campaign\Details.cshtml" />
     <Content Include="Views\Campaign\Create.cshtml" />
     <Content Include="Views\Campaign\Edit.cshtml" />
     <Content Include="Views\Campaign\Delete.cshtml" />

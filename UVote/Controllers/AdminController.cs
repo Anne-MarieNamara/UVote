@@ -37,8 +37,6 @@ namespace UVote.Controllers
                 if (admin.EmployeeId != null)
                 {
                     Session["employeeId"] = admin.EmployeeId;
-                    //Session["name"] = admin.Name;
-                    //ViewBag.Session = Session["employeeId"] + "" + Session["name"];
                     ViewBag.Session = Session["employeeId"];
                     return View("Index");
                 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using UVote.Models;
 
@@ -10,16 +7,13 @@ namespace UVote.Controllers
     public class VoteController : Controller
     {
         DAO dao = new DAO();
+
         // GET: Vote
         public ActionResult Index()
         {
             List<Election> list = dao.GetElections();
-            
-
             return View(list);
         }
-
-        
 
         // GET: Login
         [HttpGet]
@@ -50,6 +44,7 @@ namespace UVote.Controllers
             else return View(voter);
         }
 
+        // Output Candidates based on campaign
         [HttpPost]
         public ActionResult Index(FormCollection form)
         {
@@ -59,11 +54,13 @@ namespace UVote.Controllers
             return View("Details", electoralCandidates);
         }
 
+        // Display all campaigns
         public ActionResult Details()
         {
             return View();
         }
 
+        // Create a vote
         [HttpPost]
         public ActionResult Create(Vote vote)
         {

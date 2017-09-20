@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace UVote.Models
@@ -36,7 +33,6 @@ namespace UVote.Models
         public string CampaignId { get; set; }
         public IEnumerable<SelectListItem> CampaignIds { get; set; }
 
- 
         public string EmployeeId { get; set; }
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using UVote.Models;
@@ -18,8 +16,7 @@ namespace UVote.Controllers
             return View();
         }
 
-
-        // GET: Candidate/Create
+        // GET: Create
         public ActionResult Create()
         {
             var campaignIds = dao.GetAllCampaignID();
@@ -28,6 +25,7 @@ namespace UVote.Controllers
             return View(model);
         }
 
+        // To build the dropdown list
         private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<int> campaignIds)
         {
             var selectList = new List<SelectListItem>();
@@ -42,10 +40,9 @@ namespace UVote.Controllers
             return selectList;
         }
 
-        // POST: Candidate/Create
+        // POST: Create
         [HttpPost]
         public ActionResult Create(
-            //[Bind(Include = "CandidateId, FirstName, LastName, Manifesto, ImageUrl, PreviousHistory, CampaignId, EmployeeId")] 
             CandidateModel candidateModel, 
             HttpPostedFileBase imageUrl)
         {
@@ -54,7 +51,6 @@ namespace UVote.Controllers
             int count = 0;
             if (ModelState.IsValid)
             {
-
                 var fileName = Path.GetFileName(imageUrl.FileName);
                 var directory = Server.MapPath(Url.Content("~/Content/Images"));
                 var path = Path.Combine(directory, fileName);
@@ -62,11 +58,9 @@ namespace UVote.Controllers
                 candidateModel.ImageUrl = fileName;
                 count = dao.InsertCandidate(candidateModel);
                 if (count == 1)
-                {
-                    
+                {                
                     ViewBag.Message = "Candidate added!";
-                    return View("Success");
-                   
+                    return View("Success");                
                 }
                 else
                 {
