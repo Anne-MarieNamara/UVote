@@ -35,8 +35,6 @@
                             <h4 class="media-heading text-primary">@candidate.FirstName @candidate.LastName (Candidate ID: @candidate.CandidateId)</h4>
                             <p class="text-success">Manifesto</p>@candidate.CampaignId
                             <p>@candidate.Manifesto</p>
-                            <p class="text-success">Previous history</p>
-                            <p>@candidate.PreviousHistory</p>
                             @Html.Hidden("CandidateId", @candidate.CandidateId)
                             @Html.Hidden("StudentNumber", Session["studentNumber"])
                             @Html.Hidden("CampaignId")

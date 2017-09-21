@@ -33,5 +33,8 @@ namespace UVote.Controllers
         {
             return View();
         }
+
+        // Update view with data from sql
+
     }
 }

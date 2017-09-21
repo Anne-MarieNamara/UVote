@@ -6,17 +6,17 @@ namespace UVote.Models
     {
         [Display(Name = "Employee ID")]
         [RegularExpression(@"^(\d{8})$")]
-        [Required]
+        [Required(ErrorMessage = "Invalid id")]
         public string EmployeeId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Name required")]
         public string Name { get; set; }
 
         [EmailAddress]
-        [Required]
+        [Required(ErrorMessage = "Email required")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Password required")]
         [StringLength(10, ErrorMessage = "Minimum of 5 characters required", MinimumLength = 5)]
         public string Password { get; set; }
     }

@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.Helpers;
 using System.Web.Configuration;
+using System.IO;
+using System.Xml;
 
 namespace UVote.Models
 {
@@ -237,6 +239,7 @@ namespace UVote.Models
         public int InsertCandidate(CandidateModel candidateModel)
         {
             int count = 0;
+            DataSet ds = GetPreviousHistoryData(candidateModel);
             SqlCommand cmd;
             Connection();
             cmd = new SqlCommand("uspInsertCandidate", connection);
@@ -246,7 +249,8 @@ namespace UVote.Models
             cmd.Parameters.AddWithValue("@lastName", candidateModel.LastName);
             cmd.Parameters.AddWithValue("@manifesto", candidateModel.Manifesto);
             cmd.Parameters.AddWithValue("@imageUrl", candidateModel.ImageUrl);
-            cmd.Parameters.AddWithValue("@previousHistory", candidateModel.PreviousHistory);
+            //cmd.Parameters.AddWithValue("@previousHistory", candidateModel.PreviousHistory);
+            cmd.Parameters.AddWithValue("@previousHistory", ds.GetXml());
             cmd.Parameters.AddWithValue("@campaignId", candidateModel.CampaignId);
             cmd.Parameters.AddWithValue("@employeeId", candidateModel.EmployeeId);
 
@@ -264,6 +268,21 @@ namespace UVote.Models
                 connection.Close();
             }
             return count;
+        }
+
+        private DataSet GetPreviousHistoryData(CandidateModel candidateModel)
+        {
+            DataSet ds = new DataSet("Histories");
+            DataTable dt = new DataTable("History");
+            DataRow row;
+            dt.Columns.Add("Description");
+            ds.Tables.Add(dt);
+            string history = candidateModel.PreviousHistory;
+            row = dt.NewRow();
+            row["Description"] = history;
+            dt.Rows.Add(row);
+            ds.AcceptChanges();
+            return ds;
         }
 
         // Get all campaign ids
@@ -402,6 +421,7 @@ namespace UVote.Models
             List<ElectoralCandidate> list = new List<ElectoralCandidate>();
             SqlDataReader reader;
             SqlCommand cmd;
+            DataRow row;
             Connection();
             cmd = new SqlCommand("uspGetElectionCandidates", connection);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -414,12 +434,12 @@ namespace UVote.Models
                 while (reader.Read())
                 {
                     ElectoralCandidate candidate = new ElectoralCandidate();
+                    DataSet ds = new DataSet();
                     candidate.CandidateId = reader[0].ToString();
                     candidate.FirstName = reader[1].ToString();
                     candidate.LastName = reader[2].ToString();
                     candidate.Manifesto = reader[3].ToString();
                     candidate.ImageUrl = reader[4].ToString();
-                    candidate.PreviousHistory = reader[5].ToString();
                     list.Add(candidate);
                 }
             }
