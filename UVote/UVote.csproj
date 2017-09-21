@@ -148,6 +148,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Scripts\accordion.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -174,6 +175,7 @@
     <Compile Include="Models\CampaignDropDown.cs" />
     <Compile Include="Models\CampaignModel.cs" />
     <Compile Include="Models\CandidateModel.cs" />
+    <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\DAO.cs" />
     <Compile Include="Models\Election.cs" />
     <Compile Include="Models\ElectoralCandidate.cs" />

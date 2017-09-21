@@ -39,6 +39,7 @@ namespace UVote.Controllers
                     Session["employeeId"] = admin.EmployeeId;
                     ViewBag.Session = Session["employeeId"];
                     return View("Index");
+                    //return RedirectToAction("Index");
                 }
                 else
                 {

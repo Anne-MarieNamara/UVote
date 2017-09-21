@@ -75,7 +75,7 @@ namespace UVote.Controllers
                 }
                 else
                 {
-                    ViewBag.Message = "Your vote was not added.";
+                    ViewBag.Message = "You have already voted.";
                     return View("VoteError");
                 }
             }
