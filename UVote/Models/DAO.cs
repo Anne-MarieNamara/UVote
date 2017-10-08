@@ -311,6 +311,42 @@ namespace UVote.Models
             }
             return ids;
         }
+
+        // Get all candidates for admin
+        public List<CandidateForAdmin> GetAllCandidatesForAdmin()
+        {
+            List<CandidateForAdmin> list = new List<CandidateForAdmin>();
+            SqlCommand cmd;
+            SqlDataReader reader;
+            Connection();
+            cmd = new SqlCommand("uspGetAllCandidatesForAdmin", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                connection.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    CandidateForAdmin candidate = new CandidateForAdmin();
+                    candidate.CandidateId = Convert.ToInt32(reader["CandidateId"].ToString());
+                    candidate.FirstName = reader["FirstName"].ToString();
+                    candidate.LastName = reader["LastName"].ToString();
+                    candidate.RoleTitle = reader["RoleTitle"].ToString();
+                    candidate.ImageUrl = reader["ImageUrl"].ToString();
+                    list.Add(candidate);
+                }
+            }
+            catch (SqlException ex)
+            {
+                message = ex.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return list;
+        }
         #endregion
 
         #region Voter
@@ -421,7 +457,7 @@ namespace UVote.Models
             List<ElectoralCandidate> list = new List<ElectoralCandidate>();
             SqlDataReader reader;
             SqlCommand cmd;
-            DataRow row;
+            //DataRow row;
             Connection();
             cmd = new SqlCommand("uspGetElectionCandidates", connection);
             cmd.CommandType = CommandType.StoredProcedure;

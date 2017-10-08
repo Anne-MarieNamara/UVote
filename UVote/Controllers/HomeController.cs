@@ -16,12 +16,7 @@ namespace UVote.Controllers
             return View();
         }
 
-        // GET: Contact
-        public ActionResult Contact()
-        {
-            return View();
-        }
-
+        
         // Get: FAQ
         public ActionResult FAQ()
         {
@@ -30,6 +25,12 @@ namespace UVote.Controllers
 
         // Get: Sitemap
         public ActionResult Sitemap()
+        {
+            return View();
+        }
+
+        // Get: Contact
+        public ActionResult Contact()
         {
             return View();
         }

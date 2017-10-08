@@ -11,10 +11,13 @@ namespace UVote.Controllers
         DAO dao = new DAO();
 
         // GET: Candidate
+        // Get all candidates for admin to view
         public ActionResult Index()
-        {
-            return View();
+        {   
+            List<CandidateForAdmin> list = dao.GetAllCandidatesForAdmin();
+            return View(list);
         }
+        
 
         // GET: Create
         public ActionResult Create()

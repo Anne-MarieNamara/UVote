@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using UVote.Models;
 
 namespace UVote.Controllers
@@ -38,8 +34,8 @@ namespace UVote.Controllers
                 {
                     Session["employeeId"] = admin.EmployeeId;
                     ViewBag.Session = Session["employeeId"];
-                    return View("Index");
-                    //return RedirectToAction("Index");
+                    //return View("Index");
+                    return RedirectToAction("Index");
                 }
                 else
                 {

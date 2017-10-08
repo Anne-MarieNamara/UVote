@@ -2,7 +2,12 @@
 @{
     ViewBag.Title = "Add Student";
 }
-
+@section Logged{
+    @if (Session["employeeId"] == null)
+    {
+        Response.Redirect(Url.Action("Login", "admin"));
+    }
+}
 <h2>Add Student</h2>
 <hr />
 <div class="row">
@@ -11,6 +16,8 @@
             <li role="presentation">@Html.ActionLink("Add campaign", "Create", "Campaign")</li>
             <li role="presentation">@Html.ActionLink("Add candidate", "Create", "Candidate")</li>
             <li role="presentation" class="active">@Html.ActionLink("Add student", "Create", "Student")</li>
+            <li role="presentation">@Html.ActionLink("Admin Home", "Index", "Admin")</li>
+
         </ul>
     </div>
     <div class="col-md-8">

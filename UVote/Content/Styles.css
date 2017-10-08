@@ -111,12 +111,14 @@ html {
     height: auto;
     padding: 5px;
     font-size: 15px;
+    color:black;
 }
 
 .answer {
     line-height: 1.5;
     background-color: lightcyan;
     padding: 10px;
+    color: black;
 }
 
 .container-contact {
@@ -144,8 +146,8 @@ padding-right:10em;
     position: relative;
     margin: auto;
     list-style: none;
-    list-style-type:none;
-    background-color: darkblue;
+    list-style-type: none;
+    background-color: #606c7f;
     color: #FFFFFF;
 }
 
